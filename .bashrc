@@ -91,6 +91,10 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias vim='vim -p'
+alias gti='git'
+alias top='bashtop'
+alias htop='bashtop'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
