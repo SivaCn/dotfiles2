@@ -1,5 +1,8 @@
 
 --
+-- To Install Packer
+-- git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+--
 -- Setting up VIM low level commands
 vim.cmd("set mouse=")  -- Disable Mouse
 vim.cmd("set number")
