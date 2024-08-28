@@ -91,7 +91,7 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias vim='vim -p'
+alias vim='nvim -p'
 alias gti='git'
 alias top='bashtop'
 alias htop='bashtop'

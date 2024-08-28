@@ -95,6 +95,8 @@ require('packer').startup(function(use)
 
     use 'folke/which-key.nvim'
 
+    use 'neovim/nvim-lspconfig'
+
 end)
 
 require("mason").setup()
