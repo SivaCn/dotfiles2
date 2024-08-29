@@ -1,0 +1,21 @@
+[alias]
+	
+  	a = add
+	b = branch
+
+  	c = commit
+	ca = commit --amend
+	cp = cherry-pick
+
+  	d = diff
+  	f = fetch
+  	g = grep
+  	l = log
+  	s = status
+  	w = whatchanged
+
+[user]
+	email = sivacn@biglittle.ai
+	name = Siva Cn
+[core]
+	editor = vim
