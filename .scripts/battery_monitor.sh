@@ -1,5 +1,10 @@
 #!/bin/bash
 
+
+# XXX: Add the below entry to crontab
+# Run the battery Monitor Script for every minute
+# * * * * * /home/sivacn/.scripts/./battery_monitor.sh
+
 export XDG_RUNTIME_DIR=/run/user/$(id -u)
 
 V1="Charging"
@@ -17,7 +22,7 @@ U1="Discharging"
 
 U2=$(grep -w "Discharging" /sys/class/power_supply/BAT0/status)
 
-if [ "$U1" = "$U2" ] && [ "$V3" -le 20 ]; then
+if [ "$U1" = "$U2" ] && [ "$V3" -le 10 ]; then
     notify-send -u critical "LOW BATTERY! Remaining: $V3 %"
     espeak "Battery is Low"
 fi
