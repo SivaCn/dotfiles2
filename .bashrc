@@ -119,3 +119,85 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+
+
+# Fancy Two-Line Bash Prompt with Git and ASCII Symbols
+# Color definitions
+RESET="\[\033[0m\]"
+BLACK="\[\033[0;30m\]"
+RED="\[\033[0;31m\]"
+GREEN="\[\033[0;32m\]"
+YELLOW="\[\033[0;33m\]"
+BLUE="\[\033[0;34m\]"
+PURPLE="\[\033[0;35m\]"
+CYAN="\[\033[0;36m\]"
+WHITE="\[\033[0;37m\]"
+
+# ASCII symbols
+USER_SYMBOL=""
+HOST_SYMBOL="⌂"
+DIR_SYMBOL="➤"
+GIT_BRANCH_SYMBOL="⎇"
+GIT_CLEAN_SYMBOL="✔"
+GIT_DIRTY_SYMBOL="✘"
+PROMPT_SYMBOL="➤"
+
+# Git functions
+git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+
+git_status() {
+    [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working tree clean" ]] && echo "$GIT_DIRTY_SYMBOL" || echo "$GIT_CLEAN_SYMBOL"
+}
+
+# Function to get current directory (shortened if too long)
+current_directory() {
+    local pwd_length=50
+    if [ $(echo -n $PWD | wc -c | tr -d " ") -gt $pwd_length ]; then
+        echo "...$(echo -n $PWD | sed -e "s/.*\(.\{$pwd_length\}\)/\1/")"
+    else
+        echo "$PWD"
+    fi
+}
+
+# Set the prompt
+set_bash_prompt() {
+    # Get the exit code of the last command
+    local exit_code=$?
+
+    # First line of the prompt
+    PS1="\n╭───"
+    PS1+="( ${GREEN}${USER}${RESET} )──"
+    PS1+="( ${YELLOW}$(current_directory)${RESET} )──( "
+
+    # Git information (if in a git repository)
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        PS1+="${GREEN}$GIT_BRANCH_SYMBOL  ${BLUE}$(git_branch)${RESET} "
+	PS1+="${RED}$(git_status)${RESET} )"
+    fi
+
+    PS1+="\n"  # Move to the next line
+
+    # Second line of the prompt
+    PS1+="╰─("
+
+    # Show exit status of previous command
+    if [ $exit_code -eq 0 ]; then
+	PS1+="${GREEN}✔${RESET})"
+    else
+        PS1+="${RED}✘${RESET})──"
+    fi
+
+    PS1+=" ${YELLOW}$PROMPT_SYMBOL${RESET} "
+}
+
+# Set the prompt command to use our custom function
+PROMPT_COMMAND=set_bash_prompt
+
+# Optionally, set a different prompt for root user
+if [ $(id -u) -eq 0 ]; then
+    PROMPT_SYMBOL="#"
+    USER_SYMBOL="⚡"
+fi

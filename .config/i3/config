@@ -374,3 +374,26 @@ smart_gaps on
 # Floating Windows
 # for_window [class="Yad" title="yad-calendar"] floating enable
 
+# Screenshot fullscreen
+bindsym Print exec --no-startup-id scrot '%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~/Pictures/Screenshots/'
+
+# Screenshot with selection
+bindsym $mod+Print exec --no-startup-id scrot '%Y-%m-%d_%H-%M-%S.png' -s -e 'mv $f ~/Pictures/Screenshots/'
+
+# Screenshot current focus
+bindsym Shift+Print exec --no-startup-id scrot '%Y-%m-%d_%H-%M-%S.png' -u -e 'mv $f ~/Pictures/Screenshots/'
+
+# Get the list of available outputs (monitors)
+set $outputs $(xrandr --query | grep " connected" | cut -d" " -f1)
+
+# Keybindings to move workspaces
+bindsym $mod+Shift+greater move workspace to output right
+bindsym $mod+Shift+less move workspace to output left
+
+# Volume controls (ALSA)
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q sset Master 5%+
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q sset Master 5%-
+bindsym XF86AudioMute exec --no-startup-id amixer -q sset Master toggle
+
+# Floating Calander
+for_window [class="Yad"] floating enable, move position mouse, move down 30 px
