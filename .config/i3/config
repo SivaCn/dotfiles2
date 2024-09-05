@@ -397,3 +397,5 @@ bindsym XF86AudioMute exec --no-startup-id amixer -q sset Master toggle
 
 # Floating Calander
 for_window [class="Yad"] floating enable, move position mouse, move down 30 px
+
+ bindsym $mod+Shift+s exec --no-startup-id "i3-nagbar -t warning -m 'Do you really want to shutdown?' -B 'Yes, shutdown' 'systemctl poweroff'"

@@ -18,6 +18,9 @@ vim.opt.statusline:append('%F')
 -- Change the current directory based on the open file
 vim.cmd("set autochdir")
 
+-- Launch Terminator in the current file directory
+vim.cmd("nnoremap <C-t> :!terminator &<CR>")
+
 -- Enable case-insensitive search
 vim.opt.ignorecase = true
 
