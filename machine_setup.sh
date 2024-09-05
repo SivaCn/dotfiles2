@@ -8,3 +8,5 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvi
 
 snap install slack dbeaver-ce postman
 
+apt install imagemagick pdftk
+
