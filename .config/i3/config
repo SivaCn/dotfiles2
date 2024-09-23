@@ -374,14 +374,19 @@ smart_gaps on
 # Floating Windows
 # for_window [class="Yad" title="yad-calendar"] floating enable
 
-# Screenshot fullscreen
-bindsym Print exec --no-startup-id scrot '%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~/Pictures/Screenshots/'
+# # Screenshot fullscreen
+# bindsym Print exec --no-startup-id scrot '%Y-%m-%d_%H-%M-%S.png' -e 'mv $f ~/Pictures/Screenshots/'
+# # Screenshot with selection
+# bindsym $mod+Print exec --no-startup-id scrot '%Y-%m-%d_%H-%M-%S.png' -s -e 'mv $f ~/Pictures/Screenshots/'
+# # Screenshot current focus
+# bindsym Shift+Print exec --no-startup-id scrot '%Y-%m-%d_%H-%M-%S.png' -u -e 'mv $f ~/Pictures/Screenshots/'
 
+# Screenshot full Screen
+bindsym Print exec --no-startup-id gnome-screenshot
 # Screenshot with selection
-bindsym $mod+Print exec --no-startup-id scrot '%Y-%m-%d_%H-%M-%S.png' -s -e 'mv $f ~/Pictures/Screenshots/'
-
-# Screenshot current focus
-bindsym Shift+Print exec --no-startup-id scrot '%Y-%m-%d_%H-%M-%S.png' -u -e 'mv $f ~/Pictures/Screenshots/'
+bindsym Shift+Print exec --no-startup-id gnome-screenshot -a
+# Screenshot with selection
+bindsym $mod+Print exec --no-startup-id gnome-screenshot -w
 
 # Get the list of available outputs (monitors)
 set $outputs $(xrandr --query | grep " connected" | cut -d" " -f1)
