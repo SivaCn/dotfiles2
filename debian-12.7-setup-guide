@@ -1,0 +1,36 @@
+cat /etc/apt/sources.list
+    deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
+    deb-src http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
+
+    deb http://deb.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
+    deb-src http://deb.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
+
+    deb http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware
+    deb-src http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware
+
+apt update
+apt -y upgrade
+
+apt install -y neovim git curl wget terminator tree htop gedit 
+
+# Install non-free packages
+apt install firmware-iwlwifi firmware-amd-graphics
+
+apt install docker docker-compose
+/usr/sbin/usermod -aG docker <user-name>
+
+apt install snapd
+snap install slack dbeaver-ce postman
+
+
+# Install Fonts
+apt update
+apt upgrade
+apt install fonts-recommended
+apt install fonts-liberation
+apt install fonts-dejavu
+apt install fonts-noto
+apt install ttf-mscorefonts-installer
+apt update
+apt install fonts-ubuntu
+
