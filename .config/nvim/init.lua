@@ -1,7 +1,19 @@
 
 --
 -- To Install Packer
+--
+--
+-- Steps to configure
 -- git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+-- quit and reopen vim
+--
+-- sudo apt install npm python3.12-venv
+--
+-- :Mason
+-- :MasonInstall docker-compose-language-service dockerfile-language-server flake8 gitlint google-java-format grammarly-languageserver jedi-language-server jinja-lsp json-lsp json-to-struct jsonlint lua-language-server mypy pydocstyle pyflakes pyink pylama pylint pylyzer pyment pyproject-flake8 pyre pyright python-lsp-server yaml-language-server yamlfix yamlfmt yamllint
+-- quit and reopen vim
+-- :PackerInstall
+--
 --
 -- Setting up VIM low level commands
 vim.cmd("set mouse=")  -- Disable Mouse
