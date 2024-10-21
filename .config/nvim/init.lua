@@ -39,6 +39,10 @@ vim.opt.ignorecase = true
 -- Enable smart-case search
 vim.opt.smartcase = true
 
+vim.o.tabstop = 4        -- Number of spaces that a <Tab> counts for
+vim.o.shiftwidth = 4     -- Number of spaces to use for each step of (auto)indent
+vim.o.expandtab = true   -- Use spaces instead of tabs
+
 vim.g.mapleader = ","
 
 -- DEBUGGING
