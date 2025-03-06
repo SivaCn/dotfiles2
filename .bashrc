@@ -93,8 +93,9 @@ alias la='ls -A'
 alias l='ls -CF'
 alias vim='nvim -p'
 alias gti='git'
-alias top='bashtop'
-alias htop='bashtop'
+#alias top='bashtop'
+#alias htop='bashtop'
+alias rofi='rofi -show drun'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -201,3 +202,7 @@ if [ $(id -u) -eq 0 ]; then
     PROMPT_SYMBOL="#"
     USER_SYMBOL="⚡"
 fi
+
+
+# Auto stup the keyboard layout to US
+setxkbmap us

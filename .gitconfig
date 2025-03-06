@@ -15,7 +15,9 @@
   	w = whatchanged
 
 [user]
-	email = sivacn@biglittle.ai
+	email = sivacn@protonmail.com
 	name = Siva Cn
 [core]
 	editor = vim
+[init]
+	defaultBranch = dev_0.1
