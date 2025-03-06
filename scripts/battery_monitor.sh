@@ -1,12 +1,11 @@
 #!/bin/bash
 #
-#
 # sudo apt install espeak upower
 # chmod +x battery_warning.sh
 # */1 * * * * /path/to/battery_warning.sh
 
 # Set the battery thresholds (in percentage)
-LOW_THRESHOLD=10
+LOW_THRESHOLD=15
 HIGH_THRESHOLD=95
 
 # Get the battery level and status
