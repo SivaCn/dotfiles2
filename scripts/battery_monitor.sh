@@ -1,6 +1,8 @@
 #!/bin/bash
 
 #
+# apt install espeak -y
+#
 # chmod +x scripts/battery_monitor.sh
 #
 # crontab -e
