@@ -1,5 +1,12 @@
 #!/bin/bash
 
+#
+# chmod +x scripts/battery_alert.sh
+#
+# crontab -e
+# */5 * * * * ~/scripts/battery_alert.sh
+#
+
 # Function to check battery status and alert
 check_battery() {
     # Get battery percentage
