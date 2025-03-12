@@ -1,5 +1,5 @@
 [alias]
-	
+
   	a = add
 	b = branch
 
@@ -15,8 +15,8 @@
   	w = whatchanged
 
 [user]
-	email = sivacn@protonmail.com
-	name = Siva Cn
+	email = cnsiva@protonmail.com
+	name = Cn Siva
 [core]
 	editor = vim
 [init]

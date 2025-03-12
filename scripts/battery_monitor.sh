@@ -1,23 +1,26 @@
 #!/bin/bash
-#
-# sudo apt install espeak upower
-# chmod +x battery_warning.sh
-# */1 * * * * /path/to/battery_warning.sh
 
-# Set the battery thresholds (in percentage)
-LOW_THRESHOLD=15
-HIGH_THRESHOLD=95
+# Function to check battery status and alert
+check_battery() {
+    # Get battery percentage
+    BATTERY_LEVEL=$(upower -i $(upower -e | grep 'BAT') | grep "percentage" | awk '{print $2}' | tr -d '%')
 
-# Get the battery level and status
-BATTERY_INFO=$(upower -i $(upower -e | grep 'BAT'))
-BATTERY_LEVEL=$(echo "$BATTERY_INFO" | grep -E "percentage" | awk '{print $2}' | tr -d '%')
-BATTERY_STATUS=$(echo "$BATTERY_INFO" | grep -E "state" | awk '{print $2}')
+    # Get battery state (charging/discharging)
+    BATTERY_STATE=$(upower -i $(upower -e | grep 'BAT') | grep "state" | awk '{print $2}')
 
-# Check if the battery is discharging and below the low threshold
-if [[ "$BATTERY_STATUS" == "discharging" && "$BATTERY_LEVEL" -le "$LOW_THRESHOLD" ]]; then
-    espeak "Warning! Battery level is critical at $BATTERY_LEVEL percent. Please connect the charger immediately."
+    # Alert for low battery (below 10%)
+    if [ "$BATTERY_LEVEL" -lt 10 ] && [ "$BATTERY_STATE" == "discharging" ]; then
+        espeak "Battery is critically low" -s 150
+        notify-send "Low Battery Warning" "Battery is at ${BATTERY_LEVEL}%. Plug in the charger!" -u critical
+    fi
 
-# Check if the battery is charging and above the high threshold
-elif [[ "$BATTERY_STATUS" == "charging" && "$BATTERY_LEVEL" -ge "$HIGH_THRESHOLD" ]]; then
-    espeak "Warning! Battery level is at $BATTERY_LEVEL percent. Please disconnect the charger to preserve battery health."
-fi
+    # Alert for full charge (above 90% and charging)
+    if [ "$BATTERY_LEVEL" -gt 95 ] && [ "$BATTERY_STATE" == "charging" ]; then
+        espeak "Battery is almost full" -s 150
+        notify-send "Battery Full Alert" "Battery is at ${BATTERY_LEVEL}%. Unplug the charger!" -u normal
+    fi
+}
+
+# Run the function
+check_battery
+
