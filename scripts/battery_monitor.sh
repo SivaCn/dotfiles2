@@ -9,27 +9,45 @@
 # */5 * * * * ~/scripts/battery_monitor.sh
 #
 
-# Function to check battery status and alert
-check_battery() {
-    # Get battery percentage
-    BATTERY_LEVEL=$(upower -i $(upower -e | grep 'BAT') | grep "percentage" | awk '{print $2}' | tr -d '%')
+# Specify the display and user
+DISPLAY=:0
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
 
-    # Get battery state (charging/discharging)
-    BATTERY_STATE=$(upower -i $(upower -e | grep 'BAT') | grep "state" | awk '{print $2}')
+export DISPLAY DBUS_SESSION_BUS_ADDRESS
 
-    # Alert for low battery (below 10%)
-    if [ "$BATTERY_LEVEL" -lt 10 ] && [ "$BATTERY_STATE" == "discharging" ]; then
-        espeak "Battery low" -s 150
-        notify-send "Low Battery Warning" "Battery is at ${BATTERY_LEVEL}%. Plug in the charger!" -u critical
-    fi
+# Battery monitoring script with desktop notifications
+# Save as battery_monitor.sh, make executable with: chmod +x battery_monitor.sh
+# Run with: ./battery_monitor.sh
 
-    # Alert for full charge (above 90% and charging)
-    if [ "$BATTERY_LEVEL" -gt 95 ] && [ "$BATTERY_STATE" == "charging" ]; then
-        espeak "Battery full" -s 150
-        notify-send "Battery Full Alert" "Battery is at ${BATTERY_LEVEL}%. Unplug the charger!" -u normal
-    fi
+# Configuration
+LOW_BATTERY_THRESHOLD=20      # Percentage at which low battery warning is shown
+FULL_BATTERY_THRESHOLD=95     # Percentage at which full battery notification is shown
+
+# Function to send notification
+send_notification() {
+    local title="$1"
+    local message="$2"
+    local urgency="$3"
+
+    notify-send -u "$urgency" -i "battery" "$title" "$message"
 }
 
-# Run the function
-check_battery
+# Get battery information
+battery_info=$(acpi -b)
+battery_status=$(echo "$battery_info" | awk '{print $3}' | tr -d ',')
+battery_percent=$(echo "$battery_info" | grep -Po '\d+%' | tr -d '%')
+
+# Check if on battery power
+if echo "$battery_info" | grep -q "Discharging"; then
+    # Battery is discharging
+    if [ "$battery_percent" -le "$LOW_BATTERY_THRESHOLD" ]; then
+        espeak "Low Battery"
+        send_notification "Low Battery Warning" "Battery is at ${battery_percent}%! Connect the charger." "critical"
+    fi
+else
+    # Battery is charging or full
+    if [ "$battery_percent" -ge "$FULL_BATTERY_THRESHOLD" ] && [ "$battery_status" == "Charging" ]; then
+        send_notification "Battery Charged" "Battery is at ${battery_percent}%. You may want to unplug the charger." "normal"
+    fi
+fi
 
